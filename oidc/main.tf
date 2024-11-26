@@ -21,20 +21,6 @@ variable "role_name" {
   default     = "github-actions-oidc-role"
 }
 
-variable "iam_role_permissions" {
-  description = "List of IAM permissions to grant to the role"
-  type        = list(string)
-  default = [
-    "ec2:ImportSnapshot",
-    "ec2:DescribeImportSnapshotTasks",
-    "ec2:CreateLaunchTemplateVersion",
-    "ec2:RegisterImage",
-    "s3:PutObject",
-    "s3:GetObject",
-    "s3:ListBucket"
-  ]
-}
-
 variable "repositories" {
   description = "List of GitHub repositories to grant access to"
   type        = list(string)
@@ -43,6 +29,7 @@ variable "repositories" {
 provider "aws" {
   region = var.aws_region
 }
+
 # aws account id
 data "aws_caller_identity" "current" {}
 
@@ -54,14 +41,37 @@ resource "aws_iam_policy" "github_actions" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect   = "Allow"
-        Action   = var.iam_role_permissions
+        Sid    = "ListAndDescribe"
+        Effect = "Allow"
+        Action = [
+          "dynamodb:List*",
+          "dynamodb:DescribeReservedCapacity*",
+          "dynamodb:DescribeLimits",
+          "dynamodb:DescribeTimeToLive"
+        ]
         Resource = "*"
       },
+      {
+        Sid    = "SpecificTable"
+        Effect = "Allow"
+        Action = [
+          "dynamodb:BatchGet*",
+          "dynamodb:DescribeStream",
+          "dynamodb:DescribeTable",
+          "dynamodb:Get*",
+          "dynamodb:Query",
+          "dynamodb:Scan",
+          "dynamodb:BatchWrite*",
+          "dynamodb:CreateTable",
+          "dynamodb:Delete*",
+          "dynamodb:Update*",
+          "dynamodb:PutItem"
+        ]
+        Resource = "arn:aws:dynamodb:*:*:table/DiggerDynamoDBLockTable"
+      }
     ]
   })
 }
-
 
 module "github-oidc" {
   source  = "terraform-module/github-oidc-provider/aws"
@@ -76,7 +86,6 @@ module "github-oidc" {
     aws_iam_policy.github_actions.arn
   ]
 }
-
 
 ################################################################################
 # OUTPUTS
