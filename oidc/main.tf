@@ -47,34 +47,11 @@ resource "aws_iam_policy" "github_actions" {
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
+      # any action on s3 or dynamodb
       {
-        Sid    = "ListAndDescribe"
-        Effect = "Allow"
-        Action = [
-          "dynamodb:List*",
-          "dynamodb:DescribeReservedCapacity*",
-          "dynamodb:DescribeLimits",
-          "dynamodb:DescribeTimeToLive"
-        ]
+        Effect   = "Allow"
+        Action   = "*"
         Resource = "*"
-      },
-      {
-        Sid    = "SpecificTable"
-        Effect = "Allow"
-        Action = [
-          "dynamodb:BatchGet*",
-          "dynamodb:DescribeStream",
-          "dynamodb:DescribeTable",
-          "dynamodb:Get*",
-          "dynamodb:Query",
-          "dynamodb:Scan",
-          "dynamodb:BatchWrite*",
-          "dynamodb:CreateTable",
-          "dynamodb:Delete*",
-          "dynamodb:Update*",
-          "dynamodb:PutItem"
-        ]
-        Resource = "arn:aws:dynamodb:*:*:table/DiggerDynamoDBLockTable"
       }
     ]
   })
