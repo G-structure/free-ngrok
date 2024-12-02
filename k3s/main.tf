@@ -1,5 +1,5 @@
 terraform {
-    backend "s3" {
+  backend "s3" {
     bucket         = "terraform-state-1f567871bd52790f" # Replace with your bucket name
     key            = "k3s/terraform.tfstate"
     region         = "us-west-2"
@@ -33,7 +33,7 @@ module "k3s" {
 
   ssh_public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK9tjvxDXYRrYX6oDlWI0/vbuib9JOwAooA+gbyGG/+Q robertwendt@Roberts-Laptop.local"
 
-#   ami = "todo"
+  #   ami = "todo"
 
 }
 
