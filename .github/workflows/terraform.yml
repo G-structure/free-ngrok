@@ -16,7 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        directory: ['oidc', 'state-management']
+        directory:
+          - oidc
+          - state-management
+          - k3s
     defaults:
       run:
         working-directory: ${{ matrix.directory }}
