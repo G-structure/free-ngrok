@@ -224,7 +224,7 @@ resource "aws_iam_role_policy_attachment" "app_secrets_access" {
   policy_arn = aws_iam_policy.app_secrets_access.arn
 }
 
-resource "aws_launch_template" "reverse_proxy" {
+resource "aws_launch_template" "app" {
   # image_id      = var.ami
   instance_type = "t3.medium"
   key_name      = aws_key_pair.app_key.key_name
@@ -249,7 +249,6 @@ resource "aws_launch_template" "reverse_proxy" {
     resource_type = "instance"
 
     tags = {
-      Name   = "reverse-proxy"
       Tenant = var.app_name
     }
   }
