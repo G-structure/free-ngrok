@@ -44,3 +44,11 @@ output "autoscaling_group_name" {
 output "app_launch_template_id" {
   value = module.k3s.app_launch_template_id
 }
+
+output "ip" {
+  value = module.k3s.ip
+}
+
+output "dns" {
+  value = module.k3s.dns
+}
