@@ -14,14 +14,14 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        # flake-account:
-        #   - name: embarc reverse proxy
-        #     role: arn:aws:iam::818100221446:role/github-oidc-provider-aws
-        #     region: us-west-2x
-        #     s3-bucket: emabarc-metabase-ami
-        #     flake: reverse-proxy
-        #     s3-key: reverse-proxy
-        #     launch-template: lt-0adaa5f145c20c0eb
+        flake-account:
+          - name: embarc reverse proxy
+            role: arn:aws:iam::150301572911:role/github-oidc-provider-aws
+            region: us-west-2
+            s3-bucket: 
+            flake: reverse-proxy
+            s3-key: reverse-proxy
+            launch-template: lt-0adaa5f145c20c0eb
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

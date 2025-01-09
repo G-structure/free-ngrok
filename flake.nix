@@ -7,7 +7,7 @@
   };
 
   outputs = { self, nixpkgs, flakery }: {
-    nixosConfigurations.flakery = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.reverse-proxy = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         flakery.nixosModules.flakery
