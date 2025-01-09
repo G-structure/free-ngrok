@@ -224,36 +224,36 @@ resource "aws_iam_role_policy_attachment" "app_secrets_access" {
   policy_arn = aws_iam_policy.app_secrets_access.arn
 }
 
-# resource "aws_launch_template" "reverse_proxy" {
-#   image_id      = var.ami
-#   instance_type = "t3.medium"
-#   key_name      = aws_key_pair.app_key.key_name
+resource "aws_launch_template" "reverse_proxy" {
+  # image_id      = var.ami
+  instance_type = "t3.medium"
+  key_name      = aws_key_pair.app_key.key_name
 
-#   iam_instance_profile {
-#     name = aws_iam_instance_profile.app_profile.name
-#   }
+  iam_instance_profile {
+    name = aws_iam_instance_profile.app_profile.name
+  }
 
-#   block_device_mappings {
-#     device_name = "/dev/xvda"
+  block_device_mappings {
+    device_name = "/dev/xvda"
 
-#     ebs {
-#       volume_size           = 256
-#       volume_type           = "gp3"
-#       delete_on_termination = true
-#     }
-#   }
+    ebs {
+      volume_size           = 256
+      volume_type           = "gp3"
+      delete_on_termination = true
+    }
+  }
 
-#   vpc_security_group_ids = [aws_security_group.allow_tls.id]
+  vpc_security_group_ids = [aws_security_group.allow_tls.id]
 
-#   tag_specifications {
-#     resource_type = "instance"
+  tag_specifications {
+    resource_type = "instance"
 
-#     tags = {
-#       Name   = "reverse-proxy"
-#       Tenant = var.app_name
-#     }
-#   }
-# }
+    tags = {
+      Name   = "reverse-proxy"
+      Tenant = var.app_name
+    }
+  }
+}
 
 
 # resource "aws_autoscaling_group" "reverse_proxy" {
