@@ -278,9 +278,9 @@ output "app_launch_template_id" {
 }
 
 output "ip" {
-  value = aws_eip.nat.public_ip
+  value = aws_eip.nat[*].public_ip
 }
 
 output "dns" {
-  value = aws_eip.nat.public_dns
+  value = aws_eip.nat[*].public_dns
 }
