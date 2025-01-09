@@ -1,0 +1,47 @@
+name: Build AMIs
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+
+
+jobs:
+  build-amis:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        # flake-account:
+        #   - name: embarc reverse proxy
+        #     role: arn:aws:iam::818100221446:role/github-oidc-provider-aws
+        #     region: us-west-2x
+        #     s3-bucket: emabarc-metabase-ami
+        #     flake: reverse-proxy
+        #     s3-key: reverse-proxy
+        #     launch-template: lt-0adaa5f145c20c0eb
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Set up Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Check Nix flake
+        uses: DeterminateSystems/flake-checker-action@main
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ matrix.flake-account.role }}
+          role-session-name: create-ami
+          aws-region: ${{ matrix.flake-account.region }}
+
+      - name: Create AMI
+        run: ./create-ami.py --flake .#${{ matrix.flake-account.flake }} --s3-key ${{ matrix.flake-account.s3-key }} --s3-bucket ${{ matrix.flake-account.s3-bucket }} --launch-template ${{ matrix.flake-account.launch-template }}
+        working-directory: ${{ github.workspace }}
