@@ -46,10 +46,10 @@ variable "ssh_public_key" {
   type = string
 }
 
-# variable "ami" {
-#   type    = string
-# }
-
+variable "ami" {
+  type    = string
+  description = "The ID of the AMI to use for the launch template"
+}
 
 provider "aws" {
   region = var.region
@@ -225,7 +225,7 @@ resource "aws_iam_role_policy_attachment" "app_secrets_access" {
 }
 
 resource "aws_launch_template" "app" {
-  # image_id      = var.ami
+  image_id      = var.ami
   instance_type = "t3.medium"
   key_name      = aws_key_pair.app_key.key_name
 
