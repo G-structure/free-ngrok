@@ -6,19 +6,18 @@
   };
 
   outputs = { nixpkgs, nixos-generators, ... }:
-  {
-    packages.reverse-proxy = nixos-generators.nixosGenerate {
-      system = "x86_64-linux";
-      format = "amazon";
-      modules = [
-        ({ modulesPath, ... }: {
-          imports = [
-            "${modulesPath}/virtualisation/amazon-image.nix"
+    {
+      reverse-proxy = nixpkgs.lib.nixosSystem
+        {
+          system = "x86_64-linux";
+          modules = [
+            ({ modulesPath, ... }: {
+              imports = [
+                "${modulesPath}/virtualisation/amazon-image.nix"
+              ];
+            })
+            ./configuration.nix
           ];
-        })
-        ./configuration.nix
-        ({ ... }: { amazonImage.sizeMB = 16 * 1024; })
-      ];
+        };
     };
-  };
 }
