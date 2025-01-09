@@ -276,3 +276,11 @@ output "autoscaling_group_name" {
 output "app_launch_template_id" {
   value = aws_launch_template.app.id
 }
+
+output "ip" {
+  value = aws_eip.nat.public_ip
+}
+
+output "dns" {
+  value = aws_eip.nat.public_dns
+}
