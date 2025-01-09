@@ -279,6 +279,6 @@ resource "aws_launch_template" "reverse_proxy" {
 #   value = aws_launch_template.reverse_proxy.id
 # }
 
-# output "app_launch_template_id" {
-#   value = aws_launch_template.app.id
-# }
+output "app_launch_template_id" {
+  value = aws_launch_template.app.id
+}
