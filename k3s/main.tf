@@ -39,9 +39,9 @@ module "k3s" {
 
 }
 
-# output "autoscaling_group_name" {
-#   value = module.k3s.autoscaling_group_name
-# }
+output "autoscaling_group_name" {
+  value = module.k3s.autoscaling_group_name
+}
 output "app_launch_template_id" {
   value = module.k3s.app_launch_template_id
 }

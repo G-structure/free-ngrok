@@ -255,28 +255,23 @@ resource "aws_launch_template" "app" {
 }
 
 
-# resource "aws_autoscaling_group" "reverse_proxy" {
-#   min_size            = 1
-#   max_size            = 1
-#   desired_capacity    = 1
-#   vpc_zone_identifier = aws_subnet.public[*].id
+resource "aws_autoscaling_group" "app" {
+  min_size            = 1
+  max_size            = 1
+  desired_capacity    = 1
+  vpc_zone_identifier = aws_subnet.public[*].id
 
-#   launch_template {
-#     id = aws_launch_template.reverse_proxy.id
-#     version = "$Latest"
-#   }
-# }
-
-
-# output "autoscaling_group_name" {
-#   value = aws_autoscaling_group.app.name
-# }
+  launch_template {
+    id = aws_launch_template.app.id
+    version = "$Latest"
+  }
+}
 
 
-# # print launch_template ids
-# output "reverse_proxy_launch_template_id" {
-#   value = aws_launch_template.reverse_proxy.id
-# }
+output "autoscaling_group_name" {
+  value = aws_autoscaling_group.app.name
+}
+
 
 output "app_launch_template_id" {
   value = aws_launch_template.app.id
