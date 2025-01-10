@@ -11,7 +11,7 @@
     nixosConfigurations.reverse-proxy = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
       modules = [
-        ./configuration.nix
+        ./nixos-configuration.nix
       ];
     };
 
