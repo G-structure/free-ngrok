@@ -8,6 +8,13 @@
   };
 
   outputs = { self, nixpkgs, nixos-generators, ... }: {
+    nixosConfigurations.reverse-proxy = nixpkgs.lib.nixosSystem {
+      system = "aarch64-linux";
+      modules = [
+        ./configuration.nix
+      ];
+    };
+
     packages.x86_64-linux = {
       reverse-proxy = nixos-generators.nixosGenerate {
         system = "x86_64-linux";
