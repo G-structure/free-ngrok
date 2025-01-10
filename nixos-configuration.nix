@@ -9,12 +9,9 @@
     fsType = "ext4";
   };
 
-  # Boot loader configuration
-  boot.loader.grub = {
-    enable = true;
-    devices = [ "/dev/sda" ];  # Specify your boot device
-    version = 2;
-  };
+  # Boot loader configuration for Apple Silicon
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   services.caddy = {
     enable = true;
