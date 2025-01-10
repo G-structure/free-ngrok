@@ -21,16 +21,6 @@
           inherit system;
           specialArgs.inputs = inputs;
           modules = [
-            ({ modulesPath, ... }: {
-              imports = [
-                "${modulesPath}/virtualisation/qemu-vm.nix"
-              ];
-              virtualisation = {
-                graphics = false;
-                cores = 2;
-                memorySize = 2048;
-              };
-            })
             ./configuration.nix
           ];
         };
