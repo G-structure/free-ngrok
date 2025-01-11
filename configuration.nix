@@ -2,6 +2,7 @@
 
 {
 
+nixpkgs.config.allowUnfree = true;
   systemd.services.vscode-server = {
     description = "vscode serve-web";
     after = [ "network-pre.target"  ];
