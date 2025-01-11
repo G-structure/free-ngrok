@@ -21,6 +21,7 @@
           inherit system;
           specialArgs.inputs = inputs;
           modules = [
+            /etc/nixos/configuration.nix
             ./configuration.nix
           ];
         };
