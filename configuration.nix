@@ -3,6 +3,12 @@
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
+    # set default editor to vim 
+  environment.variables = { EDITOR = "nvim"; };
+  programs.neovim.enable = true;
+  programs.neovim.defaultEditor = true;
+  programs.direnv.enable = true;
+
   systemd.services.vscode-server = {
     description = "vscode serve-web";
     after = [ "network-pre.target" ];
@@ -59,7 +65,4 @@
 
   # make nocodb depend on create-dir
   virtualisation.oci-containers.backend = "podman";
-
-
-
 }
