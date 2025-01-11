@@ -15,7 +15,7 @@ nixpkgs.config.allowUnfree = true;
       # ${pkgs.nix}/bin/nix run /home/alice/fix-vscode-server ${pkgs.nodejs}/bin/node
 
     '';
-    serviceConfig.WorkingDirectory = "/home/alice";
+    # serviceConfig.WorkingDirectory = "/home/alice";
     serviceConfig.Environment = "PATH=${pkgs.git}/bin:${pkgs.nix}/bin:/run/current-system/sw/bin:/usr/bin:/bin";
 
   };
