@@ -11,7 +11,7 @@
     serviceConfig.Type = "simple";
     serviceConfig.User = "robertwendt";
     script = ''
-      ${pkgs.vscode}/bin/code serve-web --without-connection-token --host 0.0.0.0 --port 4321 --extensions-dir /home/alice/.vscode/extensions | ${pkgs.nix}/bin/nix run github:r33drichards/fix-vscode-server ${pkgs.nodejs}/bin/node
+      ${pkgs.vscode}/bin/code serve-web --without-connection-token --host 0.0.0.0 --port 4321 --extensions-dir /Users/robertwendt/.vscode/extensions | ${pkgs.nix}/bin/nix run github:r33drichards/fix-vscode-server ${pkgs.nodejs}/bin/node
     '';
     serviceConfig.WorkingDirectory = "/Users/robertwendt";
     serviceConfig.Environment = "PATH=${pkgs.git}/bin:${pkgs.nix}/bin:/run/current-system/sw/bin:/usr/bin:/bin";
