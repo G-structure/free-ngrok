@@ -156,9 +156,9 @@ resource "aws_vpc_security_group_ingress_rule" "allow_http_ipv4" {
 resource "aws_vpc_security_group_ingress_rule" "allow_custom_port" {
   security_group_id = aws_security_group.allow_tls.id
   cidr_ipv4         = "0.0.0.0/0"
-  from_port         = 3000
+  from_port         = 7000
   ip_protocol       = "tcp"
-  to_port           = 3000
+  to_port           = 7000
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
