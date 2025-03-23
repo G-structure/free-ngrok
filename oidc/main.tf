@@ -65,7 +65,7 @@ resource "aws_iam_policy" "github_actions" {
           "ec2:TerminateInstances",
           "ec2:CreateTags",
           "ec2:DeleteTags",
-          
+
           # S3 permissions for storing AMIs
           "s3:PutObject",
           "s3:GetObject",
@@ -76,7 +76,7 @@ resource "aws_iam_policy" "github_actions" {
           # EC2 resources
           "arn:aws:ec2:${var.aws_region}:${data.aws_caller_identity.current.account_id}:instance/*",
           "arn:aws:ec2:${var.aws_region}:${data.aws_caller_identity.current.account_id}:image/*",
-          
+
           # S3 bucket resources
           "arn:aws:s3:::*",
         ]
@@ -92,7 +92,7 @@ module "github-oidc" {
   create_oidc_provider = false
   oidc_provider_arn    = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com"
   create_oidc_role     = true
-  role_name = "github-oidc-role-${random_id.suffix.hex}"
+  role_name            = "github-oidc-role-${random_id.suffix.hex}"
 
   repositories = var.repositories
 
