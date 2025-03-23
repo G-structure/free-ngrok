@@ -96,7 +96,7 @@ resource "aws_iam_policy" "github_actions" {
 
           # iam role resources
           "arn:aws:iam::${data.aws_caller_identity.current.account_id}:*",
-       ]
+        ]
       }
     ]
   })
