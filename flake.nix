@@ -19,9 +19,7 @@
           format = "amazon";
           modules = [
             ({ modulesPath, ... }: {
-              imports = [
-                "${modulesPath}/virtualisation/amazon-image.nix"
-              ];
+              imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ];
             })
             ./configuration.nix
             ({ ... }: { amazonImage.sizeMB = 16 * 1024; })
@@ -29,16 +27,12 @@
         };
         default = self.packages.${system}.reverse-proxy;
       };
-    }) // {
       nixosConfigurations = {
         test = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs.inputs = inputs;
-          modules = [
-            /etc/nixos/configuration.nix
-            ./configuration.nix
-          ];
+          modules = [ /etc/nixos/configuration.nix ./configuration.nix ];
         };
       };
-    };
+    });
 }
