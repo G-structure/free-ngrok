@@ -51,6 +51,11 @@ variable "ami" {
   description = "The ID of the AMI to use for the launch template"
 }
 
+# random suffix for resources
+resource "random_id" "suffix" {
+  byte_length = 8
+}
+
 provider "aws" {
   region = var.region
 }
@@ -169,7 +174,7 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv6" {
 }
 
 resource "aws_key_pair" "app_key" {
-  key_name   = "${var.app_name}_key"
+  key_name   = "${var.app_name}_key_${random_id.suffix.dec}"
   public_key = var.ssh_public_key
 }
 
@@ -179,12 +184,12 @@ resource "random_id" "app" {
 
 
 resource "aws_iam_instance_profile" "app_profile" {
-  name = "${var.app_name}_profile"
+  name = "${var.app_name}_profile_${random_id.suffix.dec}"
   role = aws_iam_role.app_role.name
 }
 
 resource "aws_iam_role" "app_role" {
-  name = "${var.app_name}_role"
+  name = "${var.app_name}_role_${random_id.suffix.dec}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -200,7 +205,7 @@ resource "aws_iam_role" "app_role" {
 }
 
 resource "aws_iam_policy" "app_secrets_access" {
-  name        = "${var.app_name}_secrets_access"
+  name        = "${var.app_name}_secrets_access_${random_id.suffix.dec}"
   description = "Allow access to app secrets"
   policy = jsonencode({
     Version = "2012-10-17",
