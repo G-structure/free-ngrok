@@ -5,7 +5,7 @@
   services.frp.enable = true;
   services.frp.role = "server";
   services.frp.settings = {
-     bindPort = 7000
+     bindPort = 7000;
   };
 
   # caddy revese proxy foo.example.com to 8080
