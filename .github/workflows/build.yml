@@ -16,7 +16,7 @@ jobs:
       matrix:
         flake-account:
           - name: embarc reverse proxy
-            role: arn:aws:iam::150301572911:role/github-oidc-provider-aws
+            role: arn:aws:iam::150301572911:role/github-oidc-role-0b63a2a04f37c8ee
             region: us-west-2
             s3-bucket: amis-k3s-1f567871bd52790f
             flake: reverse-proxy
