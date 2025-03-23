@@ -73,10 +73,7 @@ resource "aws_iam_policy" "github_actions" {
           "s3:DeleteObject",
 
           # dynamodb permissions for state management
-          "dynamodb:GetItem",
-          "dynamodb:PutItem",
-          "dynamodb:UpdateItem",
-          "dynamodb:DeleteItem",
+          "dynamodb:*",
 
           # iam permissions for role creation
           "iam:*",
