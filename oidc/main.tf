@@ -76,7 +76,12 @@ resource "aws_iam_policy" "github_actions" {
           "dynamodb:GetItem",
           "dynamodb:PutItem",
           "dynamodb:UpdateItem",
-          "dynamodb:DeleteItem"
+          "dynamodb:DeleteItem",
+
+          # iam permissions for role creation
+          "iam:*",
+
+
         ]
         Resource = [
           # EC2 resources
@@ -87,9 +92,11 @@ resource "aws_iam_policy" "github_actions" {
           "arn:aws:s3:::*",
 
           # dynamodb table resources
-          "arn:aws:dynamodb:${var.aws_region}:${data.aws_caller_identity.current.account_id}:table/*"
+          "arn:aws:dynamodb:${var.aws_region}:${data.aws_caller_identity.current.account_id}:table/*",
 
-        ]
+          # iam role resources
+          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:*",
+       ]
       }
     ]
   })

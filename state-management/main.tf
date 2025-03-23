@@ -1,4 +1,11 @@
 terraform {
+    backend "s3" {
+    bucket         = "terraform-state-73cea43c7d6aa30e" # Replace with your bucket name
+    key            = "state-management/terraform.tfstate"
+    region         = "us-west-2"
+    dynamodb_table = "terraform-state-lock-73cea43c7d6aa30e" # Replace with your table name
+    encrypt        = true
+  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
