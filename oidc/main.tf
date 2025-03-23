@@ -56,21 +56,10 @@ resource "aws_iam_policy" "github_actions" {
         Effect = "Allow"
         Action = [
           # EC2 permissions for AMI creation
-          "ec2:CreateImage",
-          "ec2:DeregisterImage",
-          "ec2:DescribeImages",
-          "ec2:DescribeInstances",
-          "ec2:RunInstances",
-          "ec2:StopInstances",
-          "ec2:TerminateInstances",
-          "ec2:CreateTags",
-          "ec2:DeleteTags",
+          "ec2:*",
 
           # S3 permissions for storing AMIs
-          "s3:PutObject",
-          "s3:GetObject",
-          "s3:ListBucket",
-          "s3:DeleteObject",
+          "s3:*",
 
           # dynamodb permissions for state management
           "dynamodb:*",
@@ -82,8 +71,7 @@ resource "aws_iam_policy" "github_actions" {
         ]
         Resource = [
           # EC2 resources
-          "arn:aws:ec2:${var.aws_region}:${data.aws_caller_identity.current.account_id}:instance/*",
-          "arn:aws:ec2:${var.aws_region}:${data.aws_caller_identity.current.account_id}:image/*",
+          "arn:aws:ec2:${var.aws_region}:${data.aws_caller_identity.current.account_id}:*",
 
           # S3 bucket resources
           "arn:aws:s3:::*",
