@@ -35,7 +35,7 @@ module "k3s" {
 
   ssh_public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK9tjvxDXYRrYX6oDlWI0/vbuib9JOwAooA+gbyGG/+Q robertwendt@Roberts-Laptop.local"
 
-  ami = "ami-00dec49a8a7f4b2f7"
+  ami = "ami-06830b2db20f76bed"
 }
 
 
