@@ -12,7 +12,15 @@
   };
 
   outputs = { self, nixpkgs, nixos-generators, flake-utils, ... }@inputs:
-    flake-utils.lib.eachDefaultSystem (system: {
+    flake-utils.lib.eachDefaultSystem (system: 
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+        };
+        frpcConfig = ./frpc.toml;
+      in
+      {
+
       packages = {
         reverse-proxy = nixos-generators.nixosGenerate {
           inherit system;
@@ -32,6 +40,20 @@
           inherit system;
           specialArgs.inputs = inputs;
           modules = [ /etc/nixos/configuration.nix ./configuration.nix ];
+        };
+      };
+
+
+
+
+      apps = {
+        reverse-proxy-client = flake-utils.lib.mkApp {
+          drv = pkgs.writeShellApplication {
+            name = "frpc";
+            text = ''
+              ${pkgs.frp}/bin/frpc -c ${frpcConfig}
+            '';
+          };
         };
       };
     });

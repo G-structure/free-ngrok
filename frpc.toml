@@ -1,0 +1,10 @@
+# frpc.toml
+serverAddr = "35.155.79.59"
+serverPort = 7000
+
+[[proxies]]
+name = "webserver"
+type = "tcp"
+localIP = "127.0.0.1"
+localPort = 8000
+remotePort = 8080
