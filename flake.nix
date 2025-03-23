@@ -12,24 +12,10 @@
   };
 
   outputs = { self, nixpkgs, nixos-generators, flake-utils, ... }@inputs:
-    let
-      system = "aarch64-linux";
-    in
-    {
-      nixosConfigurations = {
-        test = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs.inputs = inputs;
-          modules = [
-            /etc/nixos/configuration.nix
-            ./configuration.nix
-          ];
-        };
-      };
-    } // flake-utils.lib.eachDefaultSystem (host: {
-      packages.${host} = {
+    flake-utils.lib.eachDefaultSystem (system: {
+      packages = {
         reverse-proxy = nixos-generators.nixosGenerate {
-          system = "aarch64-linux";
+          inherit system;
           format = "amazon";
           modules = [
             ({ modulesPath, ... }: {
@@ -41,6 +27,18 @@
             ({ ... }: { amazonImage.sizeMB = 16 * 1024; })
           ];
         };
+        default = self.packages.${system}.reverse-proxy;
       };
-    });
+    }) // {
+      nixosConfigurations = {
+        test = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs.inputs = inputs;
+          modules = [
+            /etc/nixos/configuration.nix
+            ./configuration.nix
+          ];
+        };
+      };
+    };
 }
