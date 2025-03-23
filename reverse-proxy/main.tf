@@ -38,6 +38,11 @@ module "k3s" {
   ami = "ami-0dfad4b8c58201573"
 }
 
+
+# elastic ip
+resource "aws_eip" "eip" {
+}
+
 output "autoscaling_group_name" {
   value = module.k3s.autoscaling_group_name
 }
@@ -45,10 +50,6 @@ output "app_launch_template_id" {
   value = module.k3s.app_launch_template_id
 }
 
-output "ip" {
-  value = module.k3s.ip
-}
-
-output "dns" {
-  value = module.k3s.dns
+output "eip" {
+  value = aws_eip.eip.public_ip
 }
