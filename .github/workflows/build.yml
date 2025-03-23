@@ -18,10 +18,10 @@ jobs:
           - name: embarc reverse proxy
             role: arn:aws:iam::150301572911:role/github-oidc-role-0b63a2a04f37c8ee
             region: us-west-2
-            s3-bucket: amis-k3s-1f567871bd52790f
+            s3-bucket: amis-k3s-15818992197937018388
             flake: reverse-proxy
             s3-key: reverse-proxy
-            launch-template: lt-0ca44c8662fbe06ac
+            launch-template: lt-0b25d463401a113bb
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
