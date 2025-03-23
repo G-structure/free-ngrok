@@ -69,13 +69,12 @@ resource "aws_iam_policy" "github_actions" {
 
           # iam permissions for role creation
           "iam:*",
+          "autoscaling:*",
 
 
         ]
         Resource = [
           "*",
-
-
         ]
       }
     ]
