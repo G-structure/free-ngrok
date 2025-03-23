@@ -1,5 +1,12 @@
+
+
+# random suffix for resources
+resource "random_id" "suffix" {
+  byte_length = 8
+}
+
 resource "aws_s3_bucket" "amis" {
-  bucket = "amis-k3s-1f567871bd52790f"
+  bucket = "amis-k3s-${random_id.suffix.dec}"
 
   tags = {
     Name        = "AMIs Bucket"

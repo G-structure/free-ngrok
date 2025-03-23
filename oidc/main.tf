@@ -57,21 +57,13 @@ resource "aws_iam_policy" "github_actions" {
         Action = [
           # EC2 permissions for AMI creation
           "ec2:*",
-          "ec2:DescribeVpcs",
-          "ec2:DescribeSubnets",
-          "ec2:DescribeSecurityGroups",
-
+          "autoscaling:*",
           # S3 permissions for storing AMIs
           "s3:*",
-
           # dynamodb permissions for state management
           "dynamodb:*",
-
           # iam permissions for role creation
           "iam:*",
-          "autoscaling:*",
-
-
         ]
         Resource = [
           "*",
