@@ -57,7 +57,9 @@ resource "aws_iam_policy" "github_actions" {
         Action = [
           # EC2 permissions for AMI creation
           "ec2:*",
-          "ec2:Describe*",
+          "ec2:DescribeVpcs",
+          "ec2:DescribeSubnets",
+          "ec2:DescribeSecurityGroups",
 
           # S3 permissions for storing AMIs
           "s3:*",
@@ -71,17 +73,9 @@ resource "aws_iam_policy" "github_actions" {
 
         ]
         Resource = [
-          # EC2 resources
-          "arn:aws:ec2:*:${data.aws_caller_identity.current.account_id}:*",
+          "*",
 
-          # S3 bucket resources
-          "arn:aws:s3:::*",
 
-          # dynamodb table resources
-          "arn:aws:dynamodb:${var.aws_region}:${data.aws_caller_identity.current.account_id}:table/*",
-
-          # iam role resources
-          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:*",
         ]
       }
     ]
