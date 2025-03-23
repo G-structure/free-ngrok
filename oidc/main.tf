@@ -71,12 +71,7 @@ resource "aws_iam_policy" "github_actions" {
         ]
         Resource = [
           # EC2 resources
-          "arn:aws:ec2:${var.aws_region}:${data.aws_caller_identity.current.account_id}:*",
-          "arn:aws:ec2:${var.aws_region}:${data.aws_caller_identity.current.account_id}:vpc/*",
-          "arn:aws:ec2:${var.aws_region}:${data.aws_caller_identity.current.account_id}:subnet/*",
-          "arn:aws:ec2:${var.aws_region}:${data.aws_caller_identity.current.account_id}:security-group/*",
-          "arn:aws:ec2:${var.aws_region}:${data.aws_caller_identity.current.account_id}:route-table/*",
-          "arn:aws:ec2:${var.aws_region}:${data.aws_caller_identity.current.account_id}:internet-gateway/*",
+          "arn:aws:ec2:*:${data.aws_caller_identity.current.account_id}:*",
 
           # S3 bucket resources
           "arn:aws:s3:::*",
