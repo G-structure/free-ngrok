@@ -42,6 +42,11 @@ dynamodb_table_name = "terraform-state-lock-73cea43c7d6aa30e"
 state_bucket_name = "terraform-state-73cea43c7d6aa30e"
 ```
 
+copy terraform state to s3 bucket 
+
+```
+aws s3 cp terraform.tfstate s3://terraform-state-73cea43c7d6aa30e/state-management/terraform.tfstate
+
 ### oidc
 
 first we need to set up oidc to give github actions permissions to provision resources on our behalf 
