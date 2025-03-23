@@ -1,9 +1,9 @@
 terraform {
   backend "s3" {
-    bucket         = "terraform-state-1f567871bd52790f" # Replace with your bucket name
+    bucket         = "terraform-state-73cea43c7d6aa30e" # Replace with your bucket name
     key            = "oidc/terraform.tfstate"
     region         = "us-west-2"
-    dynamodb_table = "terraform-state-lock-1f567871bd52790f" # Replace with your table name
+    dynamodb_table = "terraform-state-lock-73cea43c7d6aa30e" # Replace with your table name
     encrypt        = true
   }
   required_providers {
@@ -13,7 +13,6 @@ terraform {
     }
   }
 }
-
 variable "aws_region" {
   description = "The AWS region to create resources in"
   default     = "us-west-2"
@@ -40,18 +39,48 @@ provider "aws" {
 # aws account id
 data "aws_caller_identity" "current" {}
 
+
+resource "random_id" "suffix" {
+  byte_length = 8
+}
+
+
 # create policy
 resource "aws_iam_policy" "github_actions" {
-  name        = "github-actions-policy"
+  name        = "github-actions-policy-${random_id.suffix.hex}"
   description = "Policy for GitHub Actions"
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
-      # any action on s3 or dynamodb
       {
-        Effect   = "Allow"
-        Action   = "*"
-        Resource = "*"
+        Effect = "Allow"
+        Action = [
+          # EC2 permissions for AMI creation
+          "ec2:CreateImage",
+          "ec2:DeregisterImage",
+          "ec2:DescribeImages",
+          "ec2:DescribeInstances",
+          "ec2:RunInstances",
+          "ec2:StopInstances",
+          "ec2:TerminateInstances",
+          "ec2:CreateTags",
+          "ec2:DeleteTags",
+          
+          # S3 permissions for storing AMIs
+          "s3:PutObject",
+          "s3:GetObject",
+          "s3:ListBucket",
+          "s3:DeleteObject"
+        ]
+        Resource = [
+          # EC2 resources
+          "arn:aws:ec2:${var.aws_region}:${data.aws_caller_identity.current.account_id}:instance/*",
+          "arn:aws:ec2:${var.aws_region}:${data.aws_caller_identity.current.account_id}:image/*",
+          
+          # S3 bucket resources
+          "arn:aws:s3:::${var.s3_bucket_name}",
+          "arn:aws:s3:::${var.s3_bucket_name}/*"
+        ]
       }
     ]
   })
@@ -60,9 +89,11 @@ resource "aws_iam_policy" "github_actions" {
 module "github-oidc" {
   source  = "terraform-module/github-oidc-provider/aws"
   version = "~> 1"
-
-  create_oidc_provider = true
+  # create_oidc_provider = true
+  create_oidc_provider = false
+  oidc_provider_arn    = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com"
   create_oidc_role     = true
+  role_name = "github-oidc-role-${random_id.suffix.hex}"
 
   repositories = var.repositories
 
@@ -74,11 +105,6 @@ module "github-oidc" {
 ################################################################################
 # OUTPUTS
 ################################################################################
-output "oidc_provider_arn" {
-  description = "OIDC provider ARN"
-  value       = module.github-oidc.oidc_provider_arn
-}
-
 output "github_oidc_role_arn" {
   description = "CICD GitHub role."
   value       = module.github-oidc.oidc_role

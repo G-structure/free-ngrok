@@ -1,9 +1,9 @@
 terraform {
   backend "s3" {
-    bucket         = "terraform-state-1f567871bd52790f" # Replace with your bucket name
-    key            = "k3s/terraform.tfstate"
+    bucket         = "terraform-state-73cea43c7d6aa30e" # Replace with your bucket name
+    key            = "reverse-proxy/terraform.tfstate"
     region         = "us-west-2"
-    dynamodb_table = "terraform-state-lock-1f567871bd52790f" # Replace with your table name
+    dynamodb_table = "terraform-state-lock-73cea43c7d6aa30e" # Replace with your table name
     encrypt        = true
   }
   required_providers {

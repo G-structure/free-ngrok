@@ -27,8 +27,6 @@
         };
       };
     } // flake-utils.lib.eachDefaultSystem (host: {
-
-
       packages.${host} = {
         reverse-proxy = nixos-generators.nixosGenerate {
           system = "aarch64-linux";

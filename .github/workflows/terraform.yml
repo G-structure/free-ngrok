@@ -20,7 +20,7 @@ jobs:
         directory:
           - oidc
           - state-management
-          - k3s
+          - reverse-proxy
     defaults:
       run:
         working-directory: ${{ matrix.directory }}
