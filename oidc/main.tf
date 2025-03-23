@@ -78,8 +78,7 @@ resource "aws_iam_policy" "github_actions" {
           "arn:aws:ec2:${var.aws_region}:${data.aws_caller_identity.current.account_id}:image/*",
           
           # S3 bucket resources
-          "arn:aws:s3:::${var.s3_bucket_name}",
-          "arn:aws:s3:::${var.s3_bucket_name}/*"
+          "arn:aws:s3:::*",
         ]
       }
     ]
