@@ -1,7 +1,14 @@
 { config, pkgs, ... }:
 
 {
-
+  # Enable Flakes
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+  
   services.frp.enable = true;
   services.frp.role = "server";
   services.frp.settings = { bindPort = 7000; };
