@@ -70,7 +70,13 @@ resource "aws_iam_policy" "github_actions" {
           "s3:PutObject",
           "s3:GetObject",
           "s3:ListBucket",
-          "s3:DeleteObject"
+          "s3:DeleteObject",
+
+          # dynamodb permissions for state management
+          "dynamodb:GetItem",
+          "dynamodb:PutItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:DeleteItem"
         ]
         Resource = [
           # EC2 resources
@@ -79,6 +85,10 @@ resource "aws_iam_policy" "github_actions" {
 
           # S3 bucket resources
           "arn:aws:s3:::*",
+
+          # dynamodb table resources
+          "arn:aws:dynamodb:${var.aws_region}:${data.aws_caller_identity.current.account_id}:table/*"
+
         ]
       }
     ]
