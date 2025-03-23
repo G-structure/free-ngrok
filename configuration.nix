@@ -41,13 +41,29 @@
     '';
   };
 
-  networking.firewall.allowedTCPPorts = [ 7000 80 443 ];
-  networking.firewall.allowedUDPPorts = [ 7000 80 443 ];
+  networking.firewall.allowedTCPPorts = [ 7000 80 443 22 ];
+  networking.firewall.allowedUDPPorts = [ 7000 80 443 22 ];
 
   nix.gc = {
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 7d";
+  };
+
+  users.users.f = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOAP8SjrX4AUD65sOxlfRqGoWeKp1LH4O9E68STTNFQ1 f@fs-MacBook-Pro.local"
+    ];
+
+  };
+
+  services.openssh = {
+    enable = true;
+    # require public key authentication for better security
+    settings.PasswordAuthentication = false;
+    settings.KbdInteractiveAuthentication = false;
   };
 
 }
