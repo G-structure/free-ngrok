@@ -57,6 +57,7 @@ resource "aws_iam_policy" "github_actions" {
         Action = [
           # EC2 permissions for AMI creation
           "ec2:*",
+          "ec2:Describe*",
 
           # S3 permissions for storing AMIs
           "s3:*",
