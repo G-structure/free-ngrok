@@ -1,5 +1,5 @@
 # frpc.toml
-serverAddr = "35.155.79.59"
+serverAddr = "34.121.63.130"
 serverPort = 7000
 
 [[proxies]]
