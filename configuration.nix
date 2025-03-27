@@ -41,7 +41,7 @@
   # caddy revese proxy foo.example.com to 8080
   services.caddy = {
     enable = true;
-    config = ''
+    extraConfig = ''
       foo.flakery.xyz {
         reverse_proxy 127.0.0.1:8080
       }
