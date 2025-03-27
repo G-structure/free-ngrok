@@ -66,6 +66,10 @@
     ];
 
   };
+  # allow no password sudo for f
+  security.sudo.extraConfig = ''
+    f ALL=(ALL) NOPASSWD:ALL
+  '';
 
   services.openssh = {
     enable = true;
