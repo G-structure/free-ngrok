@@ -33,6 +33,17 @@
             ({ ... }: { amazonImage.sizeMB = 16 * 1024; })
           ];
         };
+        reverse-proxy-gcp = nixos-generators.nixosGenerate {
+          inherit system;
+          format = "gce";
+
+          modules = [ 
+            ({ modulesPath, ... }: {
+              imports = [ "${modulesPath}/virtualisation/google-compute-image.nix" ];
+            })
+            ./configuration.nix 
+          ];
+        };
         default = self.packages.${system}.reverse-proxy;
       };
       nixosConfigurations = {
