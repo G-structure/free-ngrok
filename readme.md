@@ -2,6 +2,8 @@
 
 ## build the image
 
+on a linux machine, run 
+
 ```
 nix build .#reverse-proxy-gcp
 ```
