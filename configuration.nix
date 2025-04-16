@@ -13,11 +13,6 @@
   services.frp.role = "server";
 
   services.frp.settings = {
-    auth.method = "oidc";
-    auth.oidc.clientID = "frpc"; # Replace with OIDC client ID
-    auth.oidc.clientSecret = "3dJV9z6s0rlRLvl6DvOlc1NVM9DZDCHU";
-    auth.oidc.audience = "frpc";
-    auth.oidc.tokenEndpointURL = "http://localhost:8080/realms/myrealm/protocol/openid-connect/token";
     bindPort = 7000;
   };
 
