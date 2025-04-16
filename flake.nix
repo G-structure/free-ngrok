@@ -14,17 +14,20 @@
   outputs = { self, nixpkgs, nixos-generators, flake-utils, ... }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-      };
+      pkgs = import nixpkgs { inherit system; };
       frpcConfig = ./frpc.toml;
-    in
-    {
+    in {
       nixosConfigurations = {
         "reverse-proxy-gcp" = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
-          modules = [ ./configuration.nix ];
+          modules = [
+            ({ modulesPath, ... }: {
+              imports =
+                [ "${modulesPath}/virtualisation/google-compute-image.nix" ];
+            })
+            ./configuration.nix
+          ];
         };
       };
 
@@ -43,11 +46,12 @@
         reverse-proxy-gcp = nixos-generators.nixosGenerate {
           inherit system;
           format = "gce";
-          modules = [ 
+          modules = [
             ({ modulesPath, ... }: {
-              imports = [ "${modulesPath}/virtualisation/google-compute-image.nix" ];
+              imports =
+                [ "${modulesPath}/virtualisation/google-compute-image.nix" ];
             })
-            ./configuration.nix 
+            ./configuration.nix
           ];
         };
         default = self.packages.${system}.reverse-proxy;
