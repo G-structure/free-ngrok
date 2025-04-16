@@ -12,16 +12,23 @@
   };
 
   outputs = { self, nixpkgs, nixos-generators, flake-utils, ... }@inputs:
-    flake-utils.lib.eachDefaultSystem (system: 
-      let
-        pkgs = import nixpkgs {
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs {
+        inherit system;
+      };
+      frpcConfig = ./frpc.toml;
+    in
+    {
+      nixosConfigurations = {
+        "reverse-proxy-gcp" = nixpkgs.lib.nixosSystem {
           inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [ ./configuration.nix ];
         };
-        frpcConfig = ./frpc.toml;
-      in
-      {
+      };
 
-      packages = {
+      packages.${system} = {
         reverse-proxy = nixos-generators.nixosGenerate {
           inherit system;
           format = "amazon";
@@ -36,7 +43,6 @@
         reverse-proxy-gcp = nixos-generators.nixosGenerate {
           inherit system;
           format = "gce";
-
           modules = [ 
             ({ modulesPath, ... }: {
               imports = [ "${modulesPath}/virtualisation/google-compute-image.nix" ];
@@ -46,18 +52,8 @@
         };
         default = self.packages.${system}.reverse-proxy;
       };
-      nixosConfigurations = {
-        reverse-proxy-gcp = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs.inputs = inputs;
-          modules = [ /etc/nixos/configuration.nix ./configuration.nix ];
-        };
-      };
 
-
-
-
-      apps = {
+      apps.${system} = {
         reverse-proxy-client = flake-utils.lib.mkApp {
           drv = pkgs.writeShellApplication {
             name = "frpc";
@@ -67,5 +63,5 @@
           };
         };
       };
-    });
+    };
 }
