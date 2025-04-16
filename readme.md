@@ -23,3 +23,10 @@ then create an image in gcp console using this gcp bucket object
 ```
 nix run github:r33drichards/free-ngrok#reverse-proxy-client
 ```
+
+
+# switch to configuration 
+
+```
+sudo nixos-rebuild  switch --flake 'github:r33drichards/free-ngrok#reverse-proxy-gcp' --refresh
+```

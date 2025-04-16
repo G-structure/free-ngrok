@@ -47,7 +47,7 @@
         default = self.packages.${system}.reverse-proxy;
       };
       nixosConfigurations = {
-        test = nixpkgs.lib.nixosSystem {
+        reverse-proxy-gcp = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs.inputs = inputs;
           modules = [ /etc/nixos/configuration.nix ./configuration.nix ];
