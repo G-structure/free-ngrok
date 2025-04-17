@@ -26,6 +26,7 @@
       http-host = "127.0.0.1";
       hostname = "keycloak.flakery.xyz";
       http-enabled = true;
+      proxy-protocol-enabled = true;
     };
 
     database = {
