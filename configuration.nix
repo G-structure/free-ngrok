@@ -51,15 +51,15 @@
 
   };
 
-  # # caddy revese proxy foo.example.com to 8080
-  # services.caddy = {
-  #   enable = true;
-  #   extraConfig = ''
-  #     foo.flakery.xyz {
-  #       reverse_proxy 127.0.0.1:8080
-  #     }
-  #   '';
-  # };
+  # caddy revese proxy foo.example.com to 8080
+  services.caddy = {
+    enable = true;
+    extraConfig = ''
+      foo.flakery.xyz {
+        reverse_proxy 127.0.0.1:8080
+      }
+    '';
+  };
 
   # tod0 add backl 7000 when auth is working
   networking.firewall.allowedTCPPorts = [ 80 443 22 ];
