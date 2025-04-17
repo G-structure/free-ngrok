@@ -41,11 +41,7 @@
       http-enabled = true;
       http-host = "0.0.0.0";
       http-port = 8888;
-      proxy-headers = {
-        X-Forwarded-Host = "$host";
-        X-Forwarded-Proto = "$scheme";
-        X-Forwarded-For = "$remote_addr";
-      };
+
 
     };
 
