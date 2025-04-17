@@ -62,8 +62,8 @@
   };
 
   # tod0 add backl 7000 when auth is working
-  networking.firewall.allowedTCPPorts = [ 80 443 22 ];
-  networking.firewall.allowedUDPPorts = [ 80 443 22 ];
+  networking.firewall.allowedTCPPorts = [ 7000 80 443 22 ];
+  networking.firewall.allowedUDPPorts = [ 7000 80 443 22 ];
 
   nix.gc = {
     automatic = true;
