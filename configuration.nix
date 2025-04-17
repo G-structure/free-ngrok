@@ -9,9 +9,7 @@
     '';
   };
 
-  environment.systemPackages = with pkgs; [
-    cloud-utils
-  ];
+  environment.systemPackages = with pkgs; [ cloud-utils ];
 
   services.frp.enable = true;
   services.frp.role = "server";
@@ -19,6 +17,8 @@
   services.frp.settings = { bindPort = 7000; };
 
   environment.etc."keycloak-database-pass".text = "PWD";
+  services.postgresql.enable = true;
+
   services.keycloak = {
     enable = true;
     settings = {
@@ -28,7 +28,13 @@
       hostname-strict-https = false;
       http-enabled = true;
     };
-    database.passwordFile = "/etc/keycloak-database-pass";
+
+    database = {
+      type = "postgresql";
+      createLocally = true;
+      username = "keycloak";
+      passwordFile = "/etc/keycloak-database-pass";
+    };
     initialAdminPassword = "admin"; # Change this in production!
 
   };
