@@ -26,7 +26,6 @@
       http-host = "127.0.0.1";
       hostname = "keycloak.flakery.xyz";
       hostname-strict-https = false;
-      proxy = "passthrough";
       http-enabled = true;
     };
     database.passwordFile = "/etc/keycloak-database-pass";
