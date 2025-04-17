@@ -9,6 +9,10 @@
     '';
   };
 
+  environment.systemPackages = with pkgs; [
+    cloud-utils
+  ];
+
   services.frp.enable = true;
   services.frp.role = "server";
 
