@@ -24,8 +24,7 @@
     settings = {
       http-port = 8888;
       http-host = "127.0.0.1";
-      hostname = "localhost";
-      http-enabled = true;
+      hostname = "keycloak.flakery.xyz";
       hostname-strict-https = false;
     };
     database.passwordFile = "/etc/keycloak-database-pass";
