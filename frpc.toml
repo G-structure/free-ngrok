@@ -3,7 +3,7 @@ serverAddr = "foo.flakery.xyz"
 serverPort = 7000
 # frpc.toml
 auth.method = "oidc"
-auth.oidc.clientID = "frp"  # Replace with your actual client ID
+auth.oidc.clientID = "frp"
 auth.oidc.clientSecret = "Ire5BVOw51fHffoT090KEP1Cw1sYfkYe"  # Replace with your actual client secret
 auth.oidc.audience = "account"
 auth.oidc.tokenEndpointURL = "https://kc.flakery.xyz/realms/frp/protocol/openid-connect/token"
