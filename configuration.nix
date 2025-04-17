@@ -41,7 +41,7 @@
       http-enabled = true;
       http-host = "0.0.0.0";
       http-port = 8888;
-      proxy-headers = "forwarded|xforwarded";
+      proxy-headers = "xforwarded";
     };
 
     database = {
