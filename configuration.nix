@@ -18,7 +18,7 @@
     bindPort = 7000;
     auth.method = "oidc";
     auth.oidc.issuer = "https://kc.flakery.xyz/realms/frp";
-    auth.oidc.audience = "frp-client/.default";
+    auth.oidc.audience = "account";
   };
 
   environment.etc."keycloak-database-pass".text = "PWD";

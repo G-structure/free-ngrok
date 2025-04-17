@@ -1,6 +1,13 @@
 # frpc.toml
 serverAddr = "foo.flakery.xyz"
 serverPort = 7000
+# frpc.toml
+auth.method = "oidc"
+auth.oidc.clientID = "frp"  # Replace with your actual client ID
+auth.oidc.clientSecret = ""  # Replace with your actual client secret
+auth.oidc.audience = "account"
+auth.oidc.tokenEndpointURL = "https://kc.flakery.xyz/realms/frp/protocol/openid-connect/token"
+auth.oidc.scope = "openid profile email"
 
 [[proxies]]
 name = "webserver"
@@ -10,9 +17,3 @@ localPort = 8000
 remotePort = 8080
 
 
-# frpc.toml
-auth.method = "oidc"
-auth.oidc.clientID = "frp-client"  # Replace with your actual client ID
-auth.oidc.clientSecret = ""  # Replace with your actual client secret
-auth.oidc.audience = "frp-client/.default"
-auth.oidc.tokenEndpointURL = "https://kc.flakery.xyz/realms/frp/protocol/openid-connect/token"
