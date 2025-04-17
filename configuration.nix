@@ -8,27 +8,25 @@
       experimental-features = nix-command flakes
     '';
   };
-  
+
   services.frp.enable = true;
   services.frp.role = "server";
 
-  services.frp.settings = {
-    bindPort = 7000;
-  };
+  services.frp.settings = { bindPort = 7000; };
 
-  # Keycloak configuration
+  environment.etc."keycloak-database-pass".text = "PWD";
   services.keycloak = {
     enable = true;
     settings = {
-      hostname = "keycloak.flakery.xyz";
       http-port = 8888;
       http-host = "127.0.0.1";
+      hostname = "localhost";
+      http-enabled = true;
+      hostname-strict-https = false;
     };
-    database = {
-      type = "postgresql";
-      createLocally = true;
-    };
+    database.passwordFile = "/etc/keycloak-database-pass";
     initialAdminPassword = "admin"; # Change this in production!
+
   };
 
   # caddy revese proxy foo.example.com to 8080
