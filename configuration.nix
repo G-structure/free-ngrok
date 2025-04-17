@@ -19,14 +19,24 @@
   environment.etc."keycloak-database-pass".text = "PWD";
   services.postgresql.enable = true;
 
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "rwendt1337@gmail.com";
+    certs = {
+      "flakery.xyz" = {
+        domain = "keycloak.flakery.xyz";
+        webroot = "/var/lib/acme/acme-challenge/";
+        email = "rwendt1337@gmail.com";
+      };
+    };
+  };
+
   services.keycloak = {
     enable = true;
     settings = {
-      http-port = 8888;
-      http-host = "127.0.0.1";
       hostname = "keycloak.flakery.xyz";
-      http-enabled = true;
-      proxy-protocol-enabled = true;
+      ssl-certificate-path = "/var/lib/acme/flakery.xyz/cert.pem";
+      ssl-certificate-key-path = "/var/lib/acme/flakery.xyz/key.pem";
     };
 
     database = {
@@ -45,9 +55,6 @@
     extraConfig = ''
       foo.flakery.xyz {
         reverse_proxy 127.0.0.1:8080
-      }
-      keycloak.flakery.xyz {
-        reverse_proxy 127.0.0.1:8888
       }
     '';
   };
