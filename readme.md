@@ -27,6 +27,14 @@ nix run github:r33drichards/free-ngrok#reverse-proxy-client
 
 # switch to configuration 
 
+connect to instance 
+
+```
+gcloud compute ssh --zone "us-central1-c" "instance-20250327-051501" --project "dialogues-3a2cb" 
+```
+
+apply config
+
 ```
 sudo nixos-rebuild  switch --flake 'github:r33drichards/free-ngrok#reverse-proxy-gcp' --refresh
 ```
