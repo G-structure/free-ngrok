@@ -24,10 +24,10 @@
     defaults.email = "rwendt1337@gmail.com";
     certs = {
       "flakery.xyz" = {
-        domain = "keycloak.flakery.xyz";
+        domain = "kc.flakery.xyz";
         # Use DNS challenge for wildcard certificates
         dnsProvider = "route53"; # Update this to your DNS provider if different
-        environmentFile = "/var/lib/kcloak/aws-creds";
+        environmentFile = "/var/lib/kcloak/aws-creds"; # todo bootstrap this file
       };
     };
   };
@@ -37,7 +37,7 @@
     sslCertificate = "/var/lib/acme/flakery.xyz/cert.pem";
     sslCertificateKey = "/var/lib/acme/flakery.xyz/key.pem";
     settings = {
-      hostname = "keycloak.flakery.xyz";
+      hostname = "kc.flakery.xyz";
 
     };
 
@@ -51,15 +51,15 @@
 
   };
 
-  # caddy revese proxy foo.example.com to 8080
-  services.caddy = {
-    enable = true;
-    extraConfig = ''
-      foo.flakery.xyz {
-        reverse_proxy 127.0.0.1:8080
-      }
-    '';
-  };
+  # # caddy revese proxy foo.example.com to 8080
+  # services.caddy = {
+  #   enable = true;
+  #   extraConfig = ''
+  #     foo.flakery.xyz {
+  #       reverse_proxy 127.0.0.1:8080
+  #     }
+  #   '';
+  # };
 
   # tod0 add backl 7000 when auth is working
   networking.firewall.allowedTCPPorts = [ 80 443 22 ];
