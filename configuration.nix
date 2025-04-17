@@ -19,25 +19,33 @@
   environment.etc."keycloak-database-pass".text = "PWD";
   services.postgresql.enable = true;
 
-  security.acme = {
-    acceptTerms = true;
-    defaults.email = "rwendt1337@gmail.com";
-    certs = {
-      "flakery.xyz" = {
-        domain = "kc.flakery.xyz";
-        # Use DNS challenge for wildcard certificates
-        dnsProvider = "route53"; # Update this to your DNS provider if different
-        environmentFile = "/var/lib/kcloak/aws-creds"; # todo bootstrap this file
-      };
-    };
-  };
+  # security.acme = {
+  #   acceptTerms = true;
+  #   defaults.email = "rwendt1337@gmail.com";
+  #   certs = {
+  #     "flakery.xyz" = {
+  #       domain = "kc.flakery.xyz";
+  #       # Use DNS challenge for wildcard certificates
+  #       dnsProvider = "route53"; # Update this to your DNS provider if different
+  #       environmentFile = "/var/lib/kcloak/aws-creds"; # todo bootstrap this file
+  #     };
+  #   };
+  # };
 
   services.keycloak = {
     enable = true;
-    sslCertificate = "/var/lib/acme/flakery.xyz/cert.pem";
-    sslCertificateKey = "/var/lib/acme/flakery.xyz/key.pem";
+    # sslCertificate = "/var/lib/acme/flakery.xyz/cert.pem";
+    # sslCertificateKey = "/var/lib/acme/flakery.xyz/key.pem";
     settings = {
       hostname = "kc.flakery.xyz";
+      http-enabled = true;
+      http-host = "0.0.0.0";
+      http-port = 8888;
+      proxy-headers = {
+        X-Forwarded-Host = "$host";
+        X-Forwarded-Proto = "$scheme";
+        X-Forwarded-For = "$remote_addr";
+      };
 
     };
 
@@ -52,14 +60,17 @@
   };
 
   # caddy revese proxy foo.example.com to 8080
-  # services.caddy = {
-  #   enable = true;
-  #   extraConfig = ''
-  #     foo.flakery.xyz {
-  #       reverse_proxy 127.0.0.1:8080
-  #     }
-  #   '';
-  # };
+  services.caddy = {
+    enable = true;
+    extraConfig = ''
+      foo.flakery.xyz {
+        reverse_proxy 127.0.0.1:8080
+      }
+      kc.flakery.xyz {
+        reverse_proxy 127.0.0.1:8888
+      }
+    '';
+  };
 
   # tod0 add backl 7000 when auth is working
   networking.firewall.allowedTCPPorts = [ 80 443 22 ];
