@@ -20,8 +20,34 @@ then create an image in gcp console using this gcp bucket object
 
 # run the client 
 
+install `frp`
+
 ```
-nix run github:r33drichards/free-ngrok#reverse-proxy-client
+nix profile install nixpkgs#frp
+```
+
+clone this repo 
+```
+git clone https://github.com/r33drichards/free-ngrok
+```
+
+cd into the repo 
+```
+cd free-ngrok
+```
+
+edit the `frpc.toml` in the project root to include the client secret from [our keycloak instance](https://kc.flakery.xyz/admin/master/console/#/frp/clients/a9f346a4-92d0-4fe9-9994-7cb8adea3a63/credentials) 
+
+```toml
+# ..
+auth.oidc.clientSecret = "3VCK5Lz964Z1LWWs3TJmkg4peBHsQDET"  # Replace with your actual client secret
+# ..
+```
+
+run the client to create a tunnel 
+
+```
+frpc -c frpc.toml
 ```
 
 
