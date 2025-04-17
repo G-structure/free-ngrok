@@ -41,8 +41,7 @@
       http-enabled = true;
       http-host = "0.0.0.0";
       http-port = 8888;
-      proxy = "edge";  # This tells Keycloak it's behind a reverse proxy
-      proxy-address-forwarding = true;  # Enable proxy address forwarding
+      proxy-headers = "forwarded|xforwarded";
     };
 
     database = {
