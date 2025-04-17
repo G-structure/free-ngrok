@@ -14,28 +14,18 @@
   services.frp.enable = true;
   services.frp.role = "server";
 
-  services.frp.settings = { bindPort = 7000; };
+  services.frp.settings = {
+    bindPort = 7000;
+    auth.method = "oidc";
+    auth.oidc.issuer = "https://kc.flakery.xyz/realms/frp";
+    auth.oidc.audience = "frp-client/.default";
+  };
 
   environment.etc."keycloak-database-pass".text = "PWD";
   services.postgresql.enable = true;
 
-  # security.acme = {
-  #   acceptTerms = true;
-  #   defaults.email = "rwendt1337@gmail.com";
-  #   certs = {
-  #     "flakery.xyz" = {
-  #       domain = "kc.flakery.xyz";
-  #       # Use DNS challenge for wildcard certificates
-  #       dnsProvider = "route53"; # Update this to your DNS provider if different
-  #       environmentFile = "/var/lib/kcloak/aws-creds"; # todo bootstrap this file
-  #     };
-  #   };
-  # };
-
   services.keycloak = {
     enable = true;
-    # sslCertificate = "/var/lib/acme/flakery.xyz/cert.pem";
-    # sslCertificateKey = "/var/lib/acme/flakery.xyz/key.pem";
     settings = {
       hostname = "kc.flakery.xyz";
       http-enabled = true;
