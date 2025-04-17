@@ -41,8 +41,8 @@
       http-enabled = true;
       http-host = "0.0.0.0";
       http-port = 8888;
-
-
+      proxy = "edge";  # This tells Keycloak it's behind a reverse proxy
+      proxy-address-forwarding = true;  # Enable proxy address forwarding
     };
 
     database = {
@@ -63,7 +63,11 @@
         reverse_proxy 127.0.0.1:8080
       }
       kc.flakery.xyz {
-        reverse_proxy 127.0.0.1:8888
+        reverse_proxy 127.0.0.1:8888 {
+          header_up X-Forwarded-Proto https
+          header_up X-Forwarded-Host {host}
+          header_up X-Forwarded-Port 443
+        }
       }
     '';
   };
