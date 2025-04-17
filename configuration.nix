@@ -33,10 +33,11 @@
 
   services.keycloak = {
     enable = true;
+    sslCertificate = "/var/lib/acme/flakery.xyz/cert.pem";
+    sslCertificateKey = "/var/lib/acme/flakery.xyz/key.pem";
     settings = {
       hostname = "keycloak.flakery.xyz";
-      ssl-certificate-path = "/var/lib/acme/flakery.xyz/cert.pem";
-      ssl-certificate-key-path = "/var/lib/acme/flakery.xyz/key.pem";
+
     };
 
     database = {
