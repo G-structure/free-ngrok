@@ -28,9 +28,22 @@
       type = "postgresql";
       createLocally = true;
       username = "keycloak";
-      password = "keycloak";
+      passwordFile = "/run/keycloak/db-password";
     };
     initialAdminPassword = "admin"; # Change this in production!
+  };
+
+  # Create the database password file
+  systemd.services.keycloak = {
+    preStart = ''
+      mkdir -p /run/keycloak
+      echo "keycloak" > /run/keycloak/db-password
+      chown keycloak:keycloak /run/keycloak/db-password
+      chmod 600 /run/keycloak/db-password
+    '';
+    serviceConfig = {
+      RuntimeDirectory = "keycloak";
+    };
   };
 
   # caddy revese proxy foo.example.com to 8080
