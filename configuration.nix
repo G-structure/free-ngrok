@@ -25,7 +25,6 @@
       http-port = 8888;
       http-host = "127.0.0.1";
       hostname = "keycloak.flakery.xyz";
-      http-enabled = true;
     };
 
     database = {
