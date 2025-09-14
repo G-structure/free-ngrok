@@ -67,5 +67,11 @@
           };
         };
       };
+
+      devShells.${system}.default = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          google-cloud-sdk
+        ];
+      };
     };
 }

@@ -33,7 +33,7 @@ module "k3s" {
   private_subnet_cidrs = ["10.0.3.0/24", "10.0.4.0/24"]
   availability_zones   = ["us-west-2a", "us-west-2b"]
 
-  ssh_public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK9tjvxDXYRrYX6oDlWI0/vbuib9JOwAooA+gbyGG/+Q robertwendt@Roberts-Laptop.local"
+  ssh_public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILtZ+LOOnBIm4aSr0zgqEFxNYUnLNEEtkFDC1TWicYQh luc@sanative.ai"
 
   ami = "ami-095c0a8aee00e80bd"
 }
